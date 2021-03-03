@@ -89,9 +89,9 @@ class LoginViewController: UIViewController {
         
         let size = scrollView.width/3
         imageView.frame = CGRect(x: (scrollView.width - size/2)/2, y: 80, width: size/2, height: size/2)
-        emailField.frame = CGRect(x: 30, y: 220, width: scrollView.width-60, height: 52)
-        passwordField.frame = CGRect(x: 30, y: 220+62, width: scrollView.width-60, height: 52)
-        loginButton.frame = CGRect(x: 30, y: 220+62+62, width: scrollView.width-60, height: 52)
+        emailField.frame = CGRect(x: 30, y: imageView.bottom+80, width: scrollView.width-60, height: 52)
+        passwordField.frame = CGRect(x: 30, y: emailField.bottom+10, width: scrollView.width-60, height: 52)
+        loginButton.frame = CGRect(x: 30, y: passwordField.bottom+10, width: scrollView.width-60, height: 52)
     }
     
     @objc private func loginButtonTapped(){
