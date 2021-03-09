@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 print("failed to log in with Google credential")
                 return
             }
+            
             print("Successfully signed in with Google cred")
             NotificationCenter.default.post(name: .didLogInNotification, object: nil)
         }
