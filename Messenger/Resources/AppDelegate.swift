@@ -29,15 +29,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         guard let email = user.profile.email,
               let firstName = user.profile.givenName,
               let lastName = user.profile.familyName else {
-        return
-    }
+            return
+        }
         
         DatabaseManager.shared.userExists(with: email) { (exists) in
             if !exists{
                 //insert database
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
-                                                                    lastName: lastName,
-                                                                    emailAddress: email))
+                let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
+                DatabaseManager.shared.insertUser(with: chatUser, completion:{ success in
+                    if success{
+                        // upload Image
+                        
+                        if user.profile.hasImage{
+                            guard let url = user.profile.imageURL(withDimension: 200) else{
+                                return
+                            }
+                            
+                            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                                guard let data = data else{
+                                    return
+                                }
+                                let fileName = chatUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { (result) in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        //다운로드URL을 디스크에 저장, 싱글톤으로 불러온다.(캐쉬개념)
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case.failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                }
+                            }.resume()
+                            
+                            
+                        }
+                        
+                        
+                    }
+                    
+                })
             }
         }
         
@@ -67,11 +98,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // ...
         print("Google user was disconnenct")
     }
-
+    
     
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
-      -> Bool {
-      return GIDSignIn.sharedInstance().handle(url)
+    -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
     }
     
     
@@ -84,21 +115,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Override point for customization after application launch.
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
+    
 }
 

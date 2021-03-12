@@ -135,6 +135,11 @@ class LoginViewController: UIViewController {
                 return
         }
         
+//        DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
+//                                                            lastName: lastName,
+//                                                            emailAddress: email))
+        
+        
         spinner.show(in: view)
         
         //FireBase Login
