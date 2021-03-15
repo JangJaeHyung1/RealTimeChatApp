@@ -158,6 +158,9 @@ class LoginViewController: UIViewController {
             }
             
             let user  = result.user
+            
+            UserDefaults.standard.set(email, forKey: "email")
+            
             print("로그인성공 : \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         }

@@ -183,11 +183,13 @@ class RegisterViewController: UIViewController {
                 strongSelf.spinner.dismiss()
             }
             
+            
             guard !exists else{
                 strongSelf.alertUserLoginError(message: "이미 존재하는 계정입니다.")
                 // user already exists
                 return
             }
+            
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                 
