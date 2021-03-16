@@ -10,8 +10,10 @@ import JGProgressHUD
 
 class NewConversationViewController: UIViewController {
     
-    private let spinner = JGProgressHUD(style: .dark)
+    public var completion: (([String:String]) -> (Void))?
     
+    private let spinner = JGProgressHUD(style: .dark)
+     
     private var users = [[String: String]]()
     private var results = [[String: String]]()
     
@@ -82,6 +84,14 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        //start conversation
+//        print("didselect")
+        let targetUserData = results[indexPath.row]
+        
+        dismiss(animated: true, completion: { [weak self] in
+            self?.completion?(targetUserData)
+        })
+        
     }
     
 }
@@ -99,7 +109,7 @@ extension NewConversationViewController: UISearchBarDelegate{
         
         self.searchUsers(query: text)
     }
-    
+    //다시
     func searchUsers(query: String){
         //check if array has firebase results
         if hasFetched{
