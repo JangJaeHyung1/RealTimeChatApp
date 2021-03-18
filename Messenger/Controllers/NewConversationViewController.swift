@@ -109,7 +109,7 @@ extension NewConversationViewController: UISearchBarDelegate{
         
         self.searchUsers(query: text)
     }
-    //다시
+    
     func searchUsers(query: String){
         //check if array has firebase results
         if hasFetched{
@@ -122,6 +122,8 @@ extension NewConversationViewController: UISearchBarDelegate{
                 case .success(let usersCollection):
                     self?.hasFetched = true
                     self?.users = usersCollection
+                    
+                    //filter
                     self?.filterUsers(with: query)
                 case .failure(let error):
                     print("failed to get users: \(error)")
