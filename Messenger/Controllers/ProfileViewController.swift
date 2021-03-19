@@ -21,9 +21,13 @@ class ProfileViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
         tableView.tableHeaderView = createTableHeader()
     }
     func createTableHeader() -> UIView? {
+        
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
@@ -46,12 +50,14 @@ class ProfileViewController: UIViewController {
         imageView.layer.cornerRadius = imageView.width/2
         headerView.addSubview(imageView)
         
-        StorageManager.shared.downloadURL(for: path) { [weak self](result) in
+        StorageManager.shared.downloadURL(for: path) { [weak self] (result) in
             switch result {
             case .success(let url):
+                
                 self?.downloadImage(imageView: imageView, url: url)
             case .failure(let error):
-                print("Failed to get download ulr: \(error)")
+                
+                print("failed to get download url: \(error)")
             }
         }
         return headerView

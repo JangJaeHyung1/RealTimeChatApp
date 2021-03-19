@@ -216,6 +216,7 @@ class RegisterViewController: UIViewController {
                             case .success(let downloadUrl):
                                 //다운로드URL을 디스크에 저장, 싱글톤으로 불러온다.(캐쉬개념)
                                 UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                UserDefaults.standard.setValue(email, forKey: "email")
                                 print(downloadUrl)
                             case.failure(let error):
                                 print("Storage manager error: \(error)")
