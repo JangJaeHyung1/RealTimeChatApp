@@ -509,7 +509,7 @@ extension DatabaseManager{
                                 return
                             }
                             
-                            currentUserConversations[position] = finalConversation
+                            otherUserConversations[position] = finalConversation
                             strongSelf.database.child("\(otherUserEmail)/conversations").setValue(otherUserConversations) { (error, _) in
                                 guard error == nil else{
                                     completion(false)
