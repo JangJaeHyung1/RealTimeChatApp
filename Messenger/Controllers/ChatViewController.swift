@@ -50,6 +50,17 @@ struct Sender: SenderType {
     public var displayName: String
 }
 
+struct Meida: MediaItem {
+    var url: URL?
+    
+    var image: UIImage?
+    
+    var placeholderImage: UIImage
+    
+    var size: CGSize
+    
+}
+
 
 class ChatViewController: MessagesViewController {
 
@@ -98,7 +109,55 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+        setupInputButton()
     }
+    
+    private func setupInputButton(){
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 35, height: 35), animated: false)
+        button.setImage(UIImage(systemName: "paperclip"), for: .normal)
+        button.onTouchUpInside { [weak self](_) in
+            self?.presentInputActionSheet()
+        }
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
+    }
+    private func presentInputActionSheet(){
+        let actionSheet = UIAlertController(title: "미디어 전송", message: "어떤 미디어를 전송하시겠습니까?", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "사진", style: .default, handler: { [weak self](_) in
+            self?.presentPhotoInputActionSheet()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "비디오", style: .default, handler: { (_) in
+             
+        }))
+        actionSheet.addAction(UIAlertAction(title: "오디오", style: .default, handler: { (_) in
+             
+        }))
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    
+    private func presentPhotoInputActionSheet(){
+        let actionSheet = UIAlertController(title: "사진 선택", message: "사진을 어디서 가져오시겠습니까?", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "카메라", style: .default, handler: { [weak self](_) in
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "앨범", style: .default, handler: { [weak self](_) in
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
     
     private func listenForMessages(id: String, scrollToLastItem: Bool){
 //        print("fetch listen for message...")
@@ -133,6 +192,65 @@ class ChatViewController: MessagesViewController {
         }
     }
 
+}
+
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage,
+              let imageData = image.pngData(),
+              let messageId = createMessageId(),
+              let conversationId = conversationId,
+              let name = self.title,
+              let selfSender = selfSender else {
+            return
+        }
+        
+        let fileName = "photo_message_" + messageId
+        
+        
+        //upload image
+        StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName) { [weak self](result) in
+            guard let strongSelf = self else{
+                return
+            }
+            switch result {
+            
+            case .success(let urlString):
+                //ready to send message
+                print("uploaded photo message : \(urlString)")
+                
+                guard let url = URL(string: urlString),
+                      let placeholder = UIImage(systemName: "plus") else {
+                    return
+                }
+                
+                let media = Meida(url: url, image: nil, placeholderImage: placeholder, size: .zero)
+                
+                let message = Message(sender: selfSender, messageId: messageId, sentDate: Date(), kind: .photo(media))
+                
+                DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, name: name, newMessage: message) { (success) in
+                    if success{
+                        print("send photo message")
+                    }else{
+                        print("failed send photo message")
+                    }
+                }
+                
+                
+                
+            case .failure(let error):
+                print("message photo upload error : \(error)")
+            }
+        }
+        
+        //send image
+        
+    }
 }
 
 extension ChatViewController: InputBarAccessoryViewDelegate{
