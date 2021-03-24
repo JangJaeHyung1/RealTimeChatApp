@@ -376,7 +376,18 @@ extension DatabaseManager{
                     }
                     let media = Meida(url: imageUrl, image: nil , placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
                     kind = .photo(media)
-                }else{
+                }
+                
+                else if type == "video" {
+                    guard let videoUrl = URL(string: content),
+                          let placeholder = UIImage(systemName: "plus") else {
+                        return nil
+                    }
+                    let media = Meida(url: videoUrl, image: nil , placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .video(media)
+                }
+                
+                else{
                     kind = .text(content)
                 }
                 
@@ -424,7 +435,10 @@ extension DatabaseManager{
                     message = targetUrlString
                 }
                 break
-            case .video(_):
+            case .video(let mediaItem):
+                if let targetUrlString = mediaItem.url?.absoluteString {
+                    message = targetUrlString
+                }
                 break
             case .location(_):
                 break
