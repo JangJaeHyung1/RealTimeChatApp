@@ -560,6 +560,47 @@ extension DatabaseManager{
             }
         }
     }
+    
+    public func deleteConversation(conversationId:String, completion: @escaping (Bool) -> Void){
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        print("delete conversation with id: \(conversationId)")
+        
+        // 현재 사용자의 모든 conversation 가져오기
+        // target id 인 conversation collection 에서 삭제
+        // conversation 재설정
+        
+        let ref = database.child("\(safeEmail)/conversations")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if var conversations = snapshot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                for conversation in conversations {
+                    if let id = conversation["id"] as? String,
+                       id == conversationId {
+                        print("found conversation to delete")
+                        break
+                    }
+                    positionToRemove += 1
+                }
+                conversations.remove(at: positionToRemove)
+                ref.setValue(conversations) { (error, _) in
+                    guard error == nil else{
+                        print("failed deleted")
+                        completion(false)
+                        return
+                    }
+                    print("deleted conversation")
+                    completion(true)
+                }
+            }
+        }
+    
+    }
+    
+    
 }
 
 
