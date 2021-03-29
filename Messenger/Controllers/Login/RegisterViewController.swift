@@ -24,8 +24,8 @@ class RegisterViewController: UIViewController {
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.systemGray5.cgColor
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.systemGray6.cgColor
         return imageView
     }()
     
@@ -139,14 +139,14 @@ class RegisterViewController: UIViewController {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
         
-        let size = scrollView.width/3
-        imageView.frame = CGRect(x: (scrollView.width - size)/2, y: 60, width: size, height: size)
+//        let size = scrollView.width/3
+        imageView.frame = CGRect(x: (scrollView.width - 200)/2, y: 60, width: 200, height: 200)
         imageView.layer.cornerRadius = imageView.width/2.0
-        firstNameField.frame = CGRect(x: 30, y: imageView.bottom+60, width: scrollView.width-60, height: 52)
+        firstNameField.frame = CGRect(x: 30, y: imageView.bottom+40, width: scrollView.width-60, height: 52)
         lastNameField.frame = CGRect(x: 30, y: firstNameField.bottom+10, width: scrollView.width-60, height: 52)
         emailField.frame = CGRect(x: 30, y: lastNameField.bottom+10, width: scrollView.width-60, height: 52)
         passwordField.frame = CGRect(x: 30, y: emailField.bottom+10, width: scrollView.width-60, height: 52)
-        registerButton.frame = CGRect(x: 30, y: passwordField.bottom+10, width: scrollView.width-60, height: 52)
+        registerButton.frame = CGRect(x: 30, y: scrollView.bottom-180, width: scrollView.width-60, height: 52)
     }
     
     @objc private func registerButtonTapped(){

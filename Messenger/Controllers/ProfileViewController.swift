@@ -41,11 +41,12 @@ class ProfileViewController: UIViewController {
         
 //        headerView.backgroundColor = .link
         
-        let imageView = UIImageView(frame: CGRect(x: (view.width - 150)/2, y: 75, width: 150, height: 150))
+        let imageView = UIImageView(frame: CGRect(x: (view.width - 200)/2, y: 50, width: 200, height: 200))
         
         imageView.contentMode = .scaleAspectFill
         imageView.layer.backgroundColor = UIColor.white.cgColor
-        imageView.layer.borderWidth = 3
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.systemGray6.cgColor
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = imageView.width/2
         headerView.addSubview(imageView)

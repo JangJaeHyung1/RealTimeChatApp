@@ -609,7 +609,6 @@ extension DatabaseManager{
                                 ]
                             }
                             
-                            
                             strongSelf.database.child("\(otherUserEmail)/conversations").setValue(databaseEntryConversations) { (error, _) in
                                 guard error == nil else{
                                     completion(false)
