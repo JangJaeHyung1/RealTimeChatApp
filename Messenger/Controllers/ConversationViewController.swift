@@ -126,13 +126,34 @@ class ConversationViewController: UIViewController {
     
     private func createNewConversation(result: SearchResult){
         let name = result.name
-        let email = result.email
+        let email = DatabaseManager.safeEmail(emailAddress: result.email)
         
-        let vc = ChatViewController(with: email, id: nil)
-        vc.isNewConversation = true
-        vc.title = name
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)
+        //두명의 유저(발신자, 수신자)가 존재하는지 데이터베이스에서 check
+        //존재하면, converstion Id 재사용
+        //존재하지 않으면, 기존 코드 사용
+        
+        DatabaseManager.shared.conversationExists(with: email) { [weak self] (result) in
+            guard let strongSelf = self else{
+                return
+            }
+            
+            switch result {
+            case .success(let conversationId):
+                let vc = ChatViewController(with: email, id: conversationId)
+                vc.isNewConversation = false
+                vc.title = name
+                vc.navigationItem.largeTitleDisplayMode = .never
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            case .failure(_):
+                let vc = ChatViewController(with: email, id: nil)
+                vc.isNewConversation = true
+                vc.title = name
+                vc.navigationItem.largeTitleDisplayMode = .never
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
