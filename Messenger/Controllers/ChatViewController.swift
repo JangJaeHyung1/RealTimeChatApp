@@ -11,6 +11,7 @@ import InputBarAccessoryView
 import SDWebImage
 import AVKit
 import AVFoundation
+import CoreLocation
 
 struct Message: MessageType{
     public var sender: SenderType
@@ -64,6 +65,12 @@ struct Meida: MediaItem {
     
 }
 
+struct Location: LocationItem {
+    var location: CLLocation
+    
+    var size: CGSize
+    
+}
 
 class ChatViewController: MessagesViewController {
 
@@ -134,6 +141,9 @@ class ChatViewController: MessagesViewController {
         actionSheet.addAction(UIAlertAction(title: "비디오", style: .default, handler: { [weak self](_) in
             self?.presentVideoInputActionSheet()
         }))
+        actionSheet.addAction(UIAlertAction(title: "장소", style: .default, handler: { [weak self](_) in
+            self?.presentLocationPicker()
+        }))
         actionSheet.addAction(UIAlertAction(title: "오디오", style: .default, handler: { (_) in
              
         }))
@@ -141,6 +151,45 @@ class ChatViewController: MessagesViewController {
         present(actionSheet, animated: true, completion: nil)
     }
     
+    private func presentLocationPicker(){
+        let vc = LocationPickerViewController()
+        
+        vc.navigationItem.largeTitleDisplayMode = .never
+        
+        vc.completion = { [weak self] selectedCoordinates in
+            
+            guard let strongSelf = self else { return }
+            
+            guard let messageId = self?.createMessageId(),
+                  let conversationId = self?.conversationId,
+                  let name = self?.title,
+                  let selfSender = self?.selfSender else {
+                return
+            }
+            
+            let longtitude: Double = selectedCoordinates.longitude
+            let latitude: Double = selectedCoordinates.latitude
+            
+            print("long = \(longtitude), lat = \(latitude)")
+            
+            
+            let location = Location(location: CLLocation(latitude: latitude, longitude: longtitude), size: .zero)
+            
+            let message = Message(sender: selfSender, messageId: messageId, sentDate: Date(), kind: .location(location))
+            
+            //send image
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, name: name, newMessage: message) { (success) in
+                if success{
+                    print("send location message")
+                }else{
+                    print("failed send location message")
+                }
+            }
+            
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     private func presentPhotoInputActionSheet(){
         let actionSheet = UIAlertController(title: "사진 선택", message: "사진을 어떻게 가져오시겠습니까?", preferredStyle: .actionSheet)
@@ -400,6 +449,9 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
 
 
 extension ChatViewController: MessageCellDelegate{
+    
+    
+    
     func didTapImage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
             return

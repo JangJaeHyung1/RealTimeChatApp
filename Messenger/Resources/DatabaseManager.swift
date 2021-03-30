@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import MessageKit
-
+import CoreLocation
 
 final class DatabaseManager{
     static let shared = DatabaseManager()
@@ -389,6 +389,17 @@ extension DatabaseManager{
                     kind = .video(media)
                 }
                 
+                else if type == "location" {
+                    let locationComponents = content.components(separatedBy: ",")
+                    guard let longtitude = Double(locationComponents[0]),
+                          let latitude = Double(locationComponents[1]) else {
+                        return nil
+                    }
+                    
+                    let location = Location(location: CLLocation(latitude: latitude, longitude: longtitude), size: CGSize(width: 300, height: 300))
+                    kind = .location(location)
+                }
+                
                 else{
                     kind = .text(content)
                 }
@@ -442,7 +453,9 @@ extension DatabaseManager{
                     message = targetUrlString
                 }
                 break
-            case .location(_):
+            case .location(let locationDate):
+                let location = locationDate.location
+                message = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
                 break
             case .emoji(_):
                 break

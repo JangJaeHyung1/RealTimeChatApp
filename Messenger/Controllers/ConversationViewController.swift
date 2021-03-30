@@ -101,7 +101,7 @@ class ConversationViewController: UIViewController {
     @objc func didTapComposeButton(){
         let vc = NewConversationViewController()
         vc.completion = { [weak self] result in
-            print("\(result)")
+            print("result = \(result)")
             guard let strongSelf = self else { return }
             
             let currentConversations = strongSelf.conversations
