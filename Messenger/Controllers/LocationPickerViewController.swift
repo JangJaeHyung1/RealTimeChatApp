@@ -14,29 +14,50 @@ class LocationPickerViewController: UIViewController {
     public var completion: ((CLLocationCoordinate2D) -> Void)?
     
     private var coordinates: CLLocationCoordinate2D?
-    
+    private var isPickable = true
     private let map: MKMapView = {
         let map = MKMapView()
         return map
     }()
     
+    init(coordinates: CLLocationCoordinate2D?){
+        self.coordinates = coordinates
+        self.isPickable = false
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Pick Location"
         view.backgroundColor = .systemBackground
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(sendButtonTapped))
+        if isPickable{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(sendButtonTapped))
+            
+            map.isUserInteractionEnabled = true
+            
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMap(_:)))
+            
+            gesture.numberOfTapsRequired = 1
+            gesture.numberOfTouchesRequired = 1
+            
+            map.addGestureRecognizer(gesture)
+        }
+        else{
+            // just showing location
+            guard let coordinates = self.coordinates else { return }
+            
+            let pin = MKPointAnnotation()
+            pin.coordinate = coordinates
+            
+            map.addAnnotation(pin)
+            
+        }
         
         view.addSubview(map)
         
-        map.isUserInteractionEnabled = true
-        
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMap(_:)))
-        
-        gesture.numberOfTapsRequired = 1
-        gesture.numberOfTouchesRequired = 1
-        
-        map.addGestureRecognizer(gesture)
     }
     
     @objc func sendButtonTapped(){
