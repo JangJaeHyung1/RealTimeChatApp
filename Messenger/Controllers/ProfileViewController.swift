@@ -43,6 +43,9 @@ class ProfileViewController: UIViewController {
                     return
                 }
                 
+                UserDefaults.standard.setValue(nil, forKey: "email")
+                UserDefaults.standard.setValue(nil, forKey: "name")
+                
                 // Google Log out
                 GIDSignIn.sharedInstance()?.signOut()
                 
