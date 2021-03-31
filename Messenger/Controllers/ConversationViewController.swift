@@ -53,7 +53,6 @@ class ConversationViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
-        fetchConversations()
         startListeningForConversation()
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main) { [weak self] (_) in
@@ -84,8 +83,12 @@ class ConversationViewController: UIViewController {
             case .success(let conversations):
                 print("success get conversation model")
                 guard !conversations.isEmpty else {
+                    self?.tableView.isHidden = true
+                    self?.noConversationsLabel.isHidden = false
                     return
                 }
+                self?.noConversationsLabel.isHidden = true
+                self?.tableView.isHidden = false
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
@@ -93,6 +96,8 @@ class ConversationViewController: UIViewController {
                 }
                 
             case .failure(let error):
+                self?.tableView.isHidden = true
+                self?.noConversationsLabel.isHidden = false
                 print("failed to get conversations: \(error)")
             }
         }
@@ -159,6 +164,7 @@ class ConversationViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        noConversationsLabel.frame = CGRect(x: 10, y: (view.height-100)/2, width: view.width-20, height: 100)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -181,9 +187,6 @@ class ConversationViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    private func fetchConversations(){
-        tableView.isHidden = false
-    }
     
 }
 
