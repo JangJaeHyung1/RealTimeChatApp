@@ -4,6 +4,8 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - Firebase/Analytics (7.4.0):
+    - Firebase/Core
   - Firebase/Auth (7.4.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 7.4.0)
@@ -12,6 +14,9 @@ PODS:
     - FirebaseAnalytics (= 7.4.0)
   - Firebase/CoreOnly (7.4.0):
     - FirebaseCore (= 7.4.0)
+  - Firebase/Crashlytics (7.4.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 7.4.0)
   - Firebase/Database (7.4.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 7.4.0)
@@ -41,6 +46,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30907.0)
+  - FirebaseCrashlytics (7.4.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleDataTransport (~> 8.0)
+    - nanopb (~> 2.30907.0)
+    - PromisesObjC (~> 1.2)
   - FirebaseDatabase (7.4.0):
     - FirebaseCore (~> 7.0)
     - leveldb-library (~> 1.22)
@@ -114,8 +125,10 @@ PODS:
   - SDWebImage/Core (5.10.4)
 
 DEPENDENCIES:
+  - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Crashlytics
   - Firebase/Database
   - Firebase/Storage
   - GoogleSignIn
@@ -132,6 +145,7 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
     - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseStorage
@@ -158,6 +172,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: d8dba8db90a1705ee2493857047282ca4f6e7598
   FirebaseCore: 99c06e5a1e8d6952e75cb1f0a6d0b23c0f5ccdcf
   FirebaseCoreDiagnostics: 3770093ac4f2be4590fa03cfa1d3a6e5602d4557
+  FirebaseCrashlytics: ef6b0947ab6819b5cb335f8c0a7677cd57d544c5
   FirebaseDatabase: 0a619c887a9565bf4808eba37d2f0ed1d62f62d0
   FirebaseInstallations: 30646fc9a61c6f4ee3cd7a8b7231721842b40c95
   FirebaseStorage: e8726dfe21ebe068ccbe8e9c332ea90688eeadae
@@ -177,6 +192,6 @@ SPEC CHECKSUMS:
   RealmSwift: 4f6758c3adbdcc87f7b7777107226532a077f61c
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
 
-PODFILE CHECKSUM: 4045996022320262bda91deb3e6b6e35031b6b51
+PODFILE CHECKSUM: a715b210103159a6d955199d29d41c543ce54719
 
 COCOAPODS: 1.10.1

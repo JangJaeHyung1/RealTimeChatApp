@@ -73,8 +73,20 @@ class LoginViewController: UIViewController {
     
     private var loginObserver: NSObjectProtocol?
     
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+            fatalError()
+        }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let crushBtn = UIButton(type: .roundedRect)
+        crushBtn.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+        crushBtn.setTitle("Crash", for: [])
+        crushBtn.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        scrollView.addSubview(crushBtn)
+        
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main) { [weak self] (_) in
             

@@ -446,6 +446,15 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         }
     }
     
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        let sender = message.sender
+        if sender.senderId == self.selfSender?.senderId {
+            // our message the we've sent
+            return .link
+        }
+        return .secondarySystemBackground
+    }
+    
 }
 
 
@@ -491,3 +500,4 @@ extension ChatViewController: MessageCellDelegate{
         }
     }
 }
+
