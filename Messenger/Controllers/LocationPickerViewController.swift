@@ -49,6 +49,7 @@ class LocationPickerViewController: UIViewController {
             // just showing location
             guard let coordinates = self.coordinates else { return }
             
+//            map.setRegion(<#T##region: MKCoordinateRegion##MKCoordinateRegion#>, animated: <#T##Bool#>)
             let pin = MKPointAnnotation()
             pin.coordinate = coordinates
             
