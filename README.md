@@ -10,9 +10,11 @@
 - 다크모드 적용
 
 ### 그 외
-* 사용자 등록 시 Auth에 계정 데이터(이름, 이메일, 프로필이미지)를 저장하도록 함
-* 보내는 메세지 정보: 메세지 내용, 보내는 시간, 보내는 사람, 받는 사람, 메세지id로 구성
-* SDWebImage을 사용하여 프로필 이미지 set 캐시를 줄였음
+* 사용자 등록 시 Auth에 계정 데이터(이름, 이메일, 프로필이미지)를 저장
+* 메세지의 이미지는 Firebase storage에 저장
+* 보내는 메세지 정보: 메세지 내용, 보내는 시간, 보내는 사람, 받는 사람, 메세지id, 메세지type(text,location,image,video)
+* 메세지 정보는 Fireabase Realtime db
+* SDWebImage을 사용하여 프로필 이미지와 메세지 이미지의 로드속도를 줄임 (이미지를 캐시에 저장)
 * MapKit과 CoreLocation을 사용하여 위치 정보와 지도에 위치를 나타내도록 함
 * MVC 패턴으로 디자인 구성
 * MessageKit의 configureAvatarView를 사용하여 메세지 보내는 사람의 사진 표시
