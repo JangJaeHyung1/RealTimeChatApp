@@ -12,7 +12,7 @@
 ### 그 외
 - SDWebImage을 사용하여 이미지 set 캐시를 줄였으며
 - MapKit과 CoreLocation을 사용하여 위치 정보와 지도에 위치를 나타내도록 함
-- MVC로 디자인 하였음
+- MVC 패턴으로 디자인 구성
 
 ## 시현 영상
 
