@@ -22,7 +22,7 @@ class LocationPickerViewController: UIViewController {
     
     init(coordinates: CLLocationCoordinate2D?){
         self.coordinates = coordinates
-        self.isPickable = false
+        self.isPickable = coordinates == nil
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +47,7 @@ class LocationPickerViewController: UIViewController {
         }
         else{
             // just showing location
-            guard let coordinates = self.coordinates else { return }
+            guard let coordinates = coordinates else { return }
             
 //            map.setRegion(<#T##region: MKCoordinateRegion##MKCoordinateRegion#>, animated: <#T##Bool#>)
             let pin = MKPointAnnotation()

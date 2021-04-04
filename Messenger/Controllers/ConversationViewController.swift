@@ -41,7 +41,7 @@ class ConversationViewController: UIViewController {
         label.textAlignment = .center
         label.textColor = .gray
         label.font = .systemFont(ofSize: 21, weight: .medium)
-        label.isHidden = true
+        label.isHidden = false
         return label
     }()
     
@@ -70,7 +70,7 @@ class ConversationViewController: UIViewController {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return
         }
-        
+        print("email = \(email)")
         if let observer = loginObserver {
             NotificationCenter.default.removeObserver(observer)
         }

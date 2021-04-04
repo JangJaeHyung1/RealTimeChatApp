@@ -84,7 +84,7 @@ class LoginViewController: UIViewController {
         let crushBtn = UIButton(type: .roundedRect)
         crushBtn.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
         crushBtn.setTitle("Crash", for: [])
-        crushBtn.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        crushBtn.addTarget(self, action: #selector(crashButtonTapped(_:)), for: .touchUpInside)
         scrollView.addSubview(crushBtn)
         
         

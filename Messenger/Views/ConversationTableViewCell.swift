@@ -86,7 +86,7 @@ class ConversationTableViewCell: UITableViewCell {
                 print("failed to get image: \(error)")
             }
         }
-        self.userNameLabel.text = model.name
-        self.userMessageLabel.text = model.latestMessage.text
+        userNameLabel.text = model.name
+        userMessageLabel.text = model.latestMessage.text
     }
 }

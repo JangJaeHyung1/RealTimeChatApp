@@ -104,8 +104,8 @@ class ChatViewController: MessagesViewController {
     }
     
     init(with email: String, id: String?){
-        self.conversationId = id
-        self.otherUserEmail = email
+        conversationId = id
+        otherUserEmail = email
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -242,6 +242,8 @@ class ChatViewController: MessagesViewController {
     
     private func listenForMessages(id: String, scrollToLastItem: Bool){
 //        print("fetch listen for message...")
+//        messages = []
+        
         DatabaseManager.shared.getAllMessageForConversation(with: id) { [weak self](result) in
             switch result{
             case .success(let messages):
@@ -284,7 +286,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
         picker.dismiss(animated: true, completion: nil)
         guard let messageId = createMessageId(),
               let conversationId = conversationId,
-              let name = self.title,
+              let name = title,
               let selfSender = selfSender else {
             return
         }
@@ -371,7 +373,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
 extension ChatViewController: InputBarAccessoryViewDelegate{
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
-              let selfSender = self.selfSender,
+              let selfSender = selfSender,
               let messageId = createMessageId() else {
             return
         }
@@ -395,7 +397,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
             
         }else{
             guard let conversationId = conversationId,
-                  let name = self.title else {
+                  let name = title else {
                 return
             }
             //append to existing conversation data
@@ -456,7 +458,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         let sender = message.sender
-        if sender.senderId == self.selfSender?.senderId {
+        if sender.senderId == selfSender?.senderId {
             // our message the we've sent
             return .link
         }
@@ -469,7 +471,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         
         if sender.senderId == selfSender?.senderId{
             // show sender Image
-            if let currentUserImageURL = self.senderPhotoURL {
+            if let currentUserImageURL = senderPhotoURL {
                 avatarView.sd_setImage(with: currentUserImageURL, completed: nil)
             }
             else {
@@ -496,12 +498,12 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         }
         else{
             // other user Image
-            if let otherUserImageURL = self.otherUserPhotoURL {
+            if let otherUserImageURL = otherUserPhotoURL {
                 avatarView.sd_setImage(with: otherUserImageURL, completed: nil)
             }
             else {
                 // fetch url
-                let email = self.otherUserEmail
+                let email = otherUserEmail
                 
                 let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
                 let path = "images/\(safeEmail)_profile_picture.png"
@@ -537,7 +539,7 @@ extension ChatViewController: MessageCellDelegate{
             let coordinate = locationData.location.coordinate
             let vc = LocationPickerViewController(coordinates: coordinate)
             vc.title = "Location"
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         default:
             break
         }
@@ -554,7 +556,7 @@ extension ChatViewController: MessageCellDelegate{
             guard let imageUrl = media.url else { return }
             
             let vc = PhotoViewerViewController(with: imageUrl)
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
             
         case .video(let media):
             guard let videoUrl = media.url else { return }

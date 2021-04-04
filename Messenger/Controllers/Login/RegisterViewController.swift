@@ -300,7 +300,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate,  UINavigation
         print(info)
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        self.imageView.image = selectedImage
+        imageView.image = selectedImage
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
