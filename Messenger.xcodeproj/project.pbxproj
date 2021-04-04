@@ -19,13 +19,16 @@
 		D1170A1525ED261F0096CDAB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A1425ED261F0096CDAB /* LoginViewController.swift */; };
 		D1170A1A25ED262E0096CDAB /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A1925ED262E0096CDAB /* RegisterViewController.swift */; };
 		D1170A1F25ED26420096CDAB /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A1E25ED26420096CDAB /* PhotoViewerViewController.swift */; };
-		D1170A2425ED265E0096CDAB /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A2325ED265E0096CDAB /* VideoPlayerViewController.swift */; };
 		D1170A2925ED26710096CDAB /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A2825ED26710096CDAB /* NewConversationViewController.swift */; };
 		D1170A2E25ED26820096CDAB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1170A2D25ED26820096CDAB /* ProfileViewController.swift */; };
 		D11CD9FB25F7C92E00D6C2C7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11CD9FA25F7C92E00D6C2C7 /* ChatViewController.swift */; };
 		D13D123E25F8B74D00470722 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13D123D25F8B74D00470722 /* StorageManager.swift */; };
 		D14E2F7B25F0CC44005F03E2 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14E2F7A25F0CC44005F03E2 /* DatabaseManager.swift */; };
 		D1708CC22612F9F100722A0D /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1708CC12612F9F100722A0D /* LocationPickerViewController.swift */; };
+		D1726CE22619A92300D827A1 /* ConversationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1726CE12619A92300D827A1 /* ConversationsModel.swift */; };
+		D1726CE72619AA3D00D827A1 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1726CE62619AA3D00D827A1 /* ChatModel.swift */; };
+		D1726CEC2619AAA200D827A1 /* NewConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1726CEB2619AAA200D827A1 /* NewConversationModel.swift */; };
+		D1726CF42619AB3E00D827A1 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1726CF32619AB3E00D827A1 /* ProfileModel.swift */; };
 		D1738EE0260B2B5F00D07E17 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1738EDF260B2B5F00D07E17 /* NewConversationCell.swift */; };
 		D1B13934260222C1008C059A /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B13933260222C1008C059A /* ConversationTableViewCell.swift */; };
 		D1B6622E25EE6A0200DC3634 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B6622D25EE6A0200DC3634 /* Extensions.swift */; };
@@ -70,13 +73,16 @@
 		D1170A1425ED261F0096CDAB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D1170A1925ED262E0096CDAB /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D1170A1E25ED26420096CDAB /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
-		D1170A2325ED265E0096CDAB /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		D1170A2825ED26710096CDAB /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		D1170A2D25ED26820096CDAB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D11CD9FA25F7C92E00D6C2C7 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D13D123D25F8B74D00470722 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D14E2F7A25F0CC44005F03E2 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		D1708CC12612F9F100722A0D /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
+		D1726CE12619A92300D827A1 /* ConversationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsModel.swift; sourceTree = SOURCE_ROOT; };
+		D1726CE62619AA3D00D827A1 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = SOURCE_ROOT; };
+		D1726CEB2619AAA200D827A1 /* NewConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationModel.swift; sourceTree = SOURCE_ROOT; };
+		D1726CF32619AB3E00D827A1 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = SOURCE_ROOT; };
 		D1738EDF260B2B5F00D07E17 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		D1B13933260222C1008C059A /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		D1B6622D25EE6A0200DC3634 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -186,7 +192,6 @@
 				D11709D625ED23830096CDAB /* ConversationViewController.swift */,
 				D1170A3225ED360D0096CDAB /* Login */,
 				D1170A1E25ED26420096CDAB /* PhotoViewerViewController.swift */,
-				D1170A2325ED265E0096CDAB /* VideoPlayerViewController.swift */,
 				D1170A2825ED26710096CDAB /* NewConversationViewController.swift */,
 				D1170A2D25ED26820096CDAB /* ProfileViewController.swift */,
 				D11CD9FA25F7C92E00D6C2C7 /* ChatViewController.swift */,
@@ -209,6 +214,10 @@
 		D1170A0725ED24C20096CDAB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D1726CE12619A92300D827A1 /* ConversationsModel.swift */,
+				D1726CE62619AA3D00D827A1 /* ChatModel.swift */,
+				D1726CEB2619AAA200D827A1 /* NewConversationModel.swift */,
+				D1726CF32619AB3E00D827A1 /* ProfileModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,18 +474,21 @@
 				D14E2F7B25F0CC44005F03E2 /* DatabaseManager.swift in Sources */,
 				D1170A1A25ED262E0096CDAB /* RegisterViewController.swift in Sources */,
 				D1170A2925ED26710096CDAB /* NewConversationViewController.swift in Sources */,
+				D1726CF42619AB3E00D827A1 /* ProfileModel.swift in Sources */,
 				D11709D725ED23830096CDAB /* ConversationViewController.swift in Sources */,
-				D1170A2425ED265E0096CDAB /* VideoPlayerViewController.swift in Sources */,
 				D1B6622E25EE6A0200DC3634 /* Extensions.swift in Sources */,
 				D11709D325ED23830096CDAB /* AppDelegate.swift in Sources */,
 				D1170A2E25ED26820096CDAB /* ProfileViewController.swift in Sources */,
 				D11709D525ED23830096CDAB /* SceneDelegate.swift in Sources */,
 				D1B13934260222C1008C059A /* ConversationTableViewCell.swift in Sources */,
+				D1726CEC2619AAA200D827A1 /* NewConversationModel.swift in Sources */,
 				D11CD9FB25F7C92E00D6C2C7 /* ChatViewController.swift in Sources */,
 				D1170A1F25ED26420096CDAB /* PhotoViewerViewController.swift in Sources */,
 				D13D123E25F8B74D00470722 /* StorageManager.swift in Sources */,
 				D1738EE0260B2B5F00D07E17 /* NewConversationCell.swift in Sources */,
+				D1726CE22619A92300D827A1 /* ConversationsModel.swift in Sources */,
 				D1708CC22612F9F100722A0D /* LocationPickerViewController.swift in Sources */,
+				D1726CE72619AA3D00D827A1 /* ChatModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

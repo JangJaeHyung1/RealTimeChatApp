@@ -11,7 +11,7 @@ import MessageKit
 import CoreLocation
 
 final class DatabaseManager{
-    static let shared = DatabaseManager()
+    public static let shared = DatabaseManager()
     private let database = Database.database().reference()
     
     static func safeEmail(emailAddress: String) -> String {
@@ -24,6 +24,7 @@ final class DatabaseManager{
 
 
 extension DatabaseManager {
+    /// Returns dictionary node at child path
     public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void ) {
         database.child("\(path)").observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value else{
@@ -41,9 +42,10 @@ extension DatabaseManager {
 // MARK: - Accoun Management
 
 extension DatabaseManager{
-    
-    
-    
+    /// email로 생성된 계정이 있는지 확인
+    /// parameters
+    /// - `email`
+    /// - `completion` : 결과를 반환하는 비동기 클로저
     public func userExists(with email: String,
                            completion: @escaping((Bool) -> Void)) {
         
@@ -110,7 +112,7 @@ extension DatabaseManager{
 //            completion(true)
         }
     }
-    
+    /// Gets all users from database
     public func getAllUsers(completion: @escaping (Result<[[String: String]], Error>) -> Void ){
         database.child("users").observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value as? [[String: String]] else {
@@ -123,8 +125,13 @@ extension DatabaseManager{
     
     public enum DatabaseError: Error{
         case failedToFetch
+        public var lactionDescription: String {
+            switch self {
+            case .failedToFetch:
+                return "This means something failed"
+            }
+        }
     }
-    
 }
 
 
