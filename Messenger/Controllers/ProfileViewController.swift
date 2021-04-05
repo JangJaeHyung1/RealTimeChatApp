@@ -21,6 +21,8 @@ final class ProfileViewController: UIViewController {
         
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
         
+        data.removeAll()
+        
         data.append(ProfileViewModel(viewModelType: .info, title: "이름: \(UserDefaults.standard.value(forKey: "name") as? String ?? "no name")", handler: nil))
         data.append(ProfileViewModel(viewModelType: .info, title: "이메일: \(UserDefaults.standard.value(forKey: "email") as? String ?? "no email")", handler: nil))
         data.append(ProfileViewModel(viewModelType: .logout, title: "로그아웃", handler: { [weak self] in
@@ -33,8 +35,8 @@ final class ProfileViewController: UIViewController {
                     return
                 }
                 
-                UserDefaults.standard.setValue(nil, forKey: "email")
-                UserDefaults.standard.setValue(nil, forKey: "name")
+                UserDefaults.standard.setValue(" ", forKey: "email")
+                UserDefaults.standard.setValue(" ", forKey: "name")
                 
                 // Google Log out
                 GIDSignIn.sharedInstance()?.signOut()
@@ -59,13 +61,21 @@ final class ProfileViewController: UIViewController {
             self?.present(actionSheet, animated: true, completion: nil)
         }))
         
+        
+        
 //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         
     }
+
     override func viewWillAppear(_ animated: Bool) {
         tableView.tableHeaderView = createTableHeader()
+        
+        data[0] = (ProfileViewModel(viewModelType: .info, title: "이름: \(UserDefaults.standard.value(forKey: "name") as? String ?? "no name")", handler: nil))
+        data[1] = (ProfileViewModel(viewModelType: .info, title: "이메일: \(UserDefaults.standard.value(forKey: "email") as? String ?? "no email")", handler: nil))
+      
+        tableView.reloadData()
     }
     func createTableHeader() -> UIView? {
         
@@ -95,10 +105,10 @@ final class ProfileViewController: UIViewController {
         StorageManager.shared.downloadURL(for: path) { [weak self] (result) in
             switch result {
             case .success(let url):
-                
                 self?.downloadImage(imageView: imageView, url: url)
+                print("성공햇냐?")
             case .failure(let error):
-                
+                print("실패햇냐?")
                 print("failed to get download url: \(error)")
             }
         }
@@ -107,18 +117,6 @@ final class ProfileViewController: UIViewController {
     
     func downloadImage(imageView: UIImageView, url: URL){
         imageView.sd_setImage(with: url, completed: nil)
-        
-        
-//        URLSession.shared.dataTask(with: url) { (data, _, error) in
-//            guard let data = data, error == nil else{
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                let image = UIImage(data: data)
-//                imageView.image = image
-//            }
-//        }.resume()
     }
     
     

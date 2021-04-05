@@ -41,7 +41,6 @@ final class ConversationViewController: UIViewController {
         view.addSubview(noConversationsLabel)
         setupTableView()
         startListeningForConversation()
-        
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main) { [weak self] (_) in
             
             guard let strongSelf = self else{
@@ -51,6 +50,10 @@ final class ConversationViewController: UIViewController {
             strongSelf.startListeningForConversation()
         }
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        startListeningForConversation()
     }
     
     private func startListeningForConversation(){

@@ -85,7 +85,7 @@ final class LoginViewController: UIViewController {
         crushBtn.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
         crushBtn.setTitle("Crash", for: [])
         crushBtn.addTarget(self, action: #selector(crashButtonTapped(_:)), for: .touchUpInside)
-        scrollView.addSubview(crushBtn)
+//        scrollView.addSubview(crushBtn)
         
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main) { [weak self] (_) in

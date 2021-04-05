@@ -32,16 +32,19 @@ final class StorageManager {
                 return
             }
             
-            self?.storage.child("images/\(fileName)").downloadURL { (url, error) in
-                guard let url = url else{
-                    print("failed to get download url")
-                    completion(.failure(StorageErrors.failedToGetDownloadUrl))
-                    return
+                self?.storage.child("images/\(fileName)").downloadURL { (url, error) in
+                    guard let url = url else{
+                        print("failed to get download url")
+                        completion(.failure(StorageErrors.failedToGetDownloadUrl))
+                        return
+                    }
+                    let urlString = url.absoluteString
+                    
+                    print("download url 업로드완료\n:\(urlString)")
+                    completion(.success(urlString))
                 }
-                let urlString = url.absoluteString
-                print("download url returned:\(urlString)")
-                completion(.success(urlString))
-            }
+            
+            
             
         }
     }

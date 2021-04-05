@@ -205,31 +205,38 @@ final class RegisterViewController: UIViewController {
                 let chatUser = ChatAppUser(firstName: firstName,
                                           lastName: lastName,
                                           emailAddress: email)
-                
-                DatabaseManager.shared.insertUser(with: chatUser) { (success) in
-                    if success{
-                        //upload Image
-                        guard let image = strongSelf.imageView.image,
-                              let data = image.pngData() else {
-                            return
-                        }
-                        
-                        let fileName = chatUser.profilePictureFileName
-                        StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { (result) in
-                            switch result {
-                            case .success(let downloadUrl):
-                                //다운로드URL을 디스크에 저장, 싱글톤으로 불러온다.(캐쉬개념)
-                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-                                print(downloadUrl)
-                            case.failure(let error):
-                                print("Storage manager error: \(error)")
+                DispatchQueue.main.async {
+                    DatabaseManager.shared.insertUser(with: chatUser) { (success) in
+                        if success{
+                            //upload Image
+                            guard let image = strongSelf.imageView.image,
+                                  let data = image.pngData() else {
+                                return
                             }
+                            
+                            let fileName = chatUser.profilePictureFileName
+                            
+                            StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { (result) in
+                                switch result {
+                                case .success(let downloadUrl):
+                                    //다운로드URL을 디스크에 저장, 싱글톤으로 불러온다.(캐쉬개념)
+                                    UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                    print(downloadUrl)
+                                    strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                                case.failure(let error):
+                                    print("Storage manager error: \(error)")
+                                }
+                            }
+                            
+                            
+                            
                         }
-                        
                     }
+                    
                 }
                 
-                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                
+                
             }
         }
         
