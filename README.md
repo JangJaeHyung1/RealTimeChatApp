@@ -1,4 +1,5 @@
 # MessageKit을 사용한 실시간 Chat 앱
+[MessageKit] https://github.com/MessageKit/MessageKit
 
 ## 적용 사항
 - Firebase Auth와 GoogleSignIn로 구현한 구글 로그인, 이메일 로그인
