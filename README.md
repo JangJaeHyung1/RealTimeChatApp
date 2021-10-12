@@ -12,7 +12,8 @@
 - 다크모드 적용
 - Firebase Crashlytics 적용 (비정상적 종료에 대한 분석)
 
-### 
+### 기능 
+
 * 사용자 등록 시 Auth에 계정 데이터(이름, 이메일, 프로필이미지)를 저장
 * 메세지의 이미지는 Firebase storage에 저장
 * 보내는 메세지 정보: 메세지 내용, 보내는 시간, 보내는 사람, 받는 사람, 메세지id, 메세지type(text,location,image,video)
